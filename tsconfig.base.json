@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2023"],
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@trippilot/types": ["packages/types/src"],
+      "@trippilot/schemas": ["packages/schemas/src"],
+      "@trippilot/ui": ["packages/ui/src"],
+      "@trippilot/api-client": ["packages/api-client/src"],
+      "@trippilot/ai": ["packages/ai/src"],
+      "@trippilot/db": ["packages/db/src"],
+      "@trippilot/config": ["packages/config/src"]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@trippilot/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'dev scaffold for apps/mobile'",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "build": "tsc -p tsconfig.json",
+    "preview": "echo Open ComponentsPreview in Expo route"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
+    "expo-secure-store": "^14.2.3",
+    "@trippilot/api-client": "workspace:*",
+    "expo": "^53.0.0",
+    "expo-router": "^4.0.0",
+    "react": "^19.0.0",
+    "react-native": "^0.79.0",
+    "@tanstack/react-query": "^5.66.9",
+    "zustand": "^5.0.3",
+    "@react-native-async-storage/async-storage": "^1.24.0"
+  }
+}
