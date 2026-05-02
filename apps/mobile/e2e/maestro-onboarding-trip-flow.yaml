@@ -1,0 +1,14 @@
+appId: com.trippilot.mobile
+---
+- launchApp
+- assertVisible: "새 여행 만들기"
+- tapOn:
+    id: "destination"
+- inputText: "Tokyo"
+- tapOn: "다음"
+- tapOn: "다음"
+- tapOn: "다음"
+- tapOn: "다음"
+- tapOn: "다음"
+- tapOn: "다음"
+- tapOn: "생성 시작"

@@ -1,0 +1,14 @@
+# Release Checklist
+- [ ] Apple Developer account configured
+- [ ] Google Play Console account configured
+- [ ] App icon finalized
+- [ ] Splash screens finalized
+- [ ] iOS screenshots prepared
+- [ ] Android screenshots prepared
+- [ ] Privacy Policy published URL
+- [ ] App review Q&A prepared
+- [ ] Payment review docs ready (RevenueCat/Stripe)
+- [ ] Maps/Places API billing configured
+- [ ] OpenAI API usage limit + budget alerts set
+- [ ] RevenueCat products/entitlements configured
+- [ ] Affiliate link providers + disclosure text configured
