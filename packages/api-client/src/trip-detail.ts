@@ -32,5 +32,20 @@ export const selectPlaceOption = async (client: SupabaseClient, optionId: string
   return client.from('itinerary_items').update({ source: 'place_option', booking_status: 'updated' }).eq('id', itemId).select('*').single();
 };
 
-export const requestRegeneration = async (client: SupabaseClient, tripId: string, scope: 'full' | 'day' | 'constraint', payload: Record<string, unknown>) =>
-  client.from('ai_runs').insert({ trip_id: tripId, run_type: `regenerate_${scope}`, model: process.env.OPENAI_FAST_MODEL ?? 'gpt-5.4-mini', input_hash: JSON.stringify(payload), prompt_version: 'trip_regen_v1', status: 'queued', token_usage: {}, output: payload });
+export const requestRegeneration = async (client: SupabaseClient, tripId: string, scope: 'full' | 'day' | 'constraint', payload: Record<string, unknown>) => {
+  const inputHash = JSON.stringify(payload);
+  const recent = await client
+    .from('ai_runs')
+    .select('id,status')
+    .eq('trip_id', tripId)
+    .eq('run_type', `regenerate_${scope}`)
+    .eq('input_hash', inputHash)
+    .in('status', ['queued', 'running'])
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (recent.data?.id) return { data: recent.data, error: null };
+
+  return client.from('ai_runs').insert({ trip_id: tripId, run_type: `regenerate_${scope}`, model: process.env.OPENAI_FAST_MODEL ?? 'gpt-5.4-mini', input_hash: inputHash, prompt_version: 'trip_regen_v1', status: 'queued', token_usage: {}, output: payload });
+};

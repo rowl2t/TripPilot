@@ -30,7 +30,7 @@ export default function TripDetailScreen() {
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedPin, setSelectedPin] = useState<MapPin | null>(null);
   const mapData = useMemo(() => getMockMapData(), []);
-  const filteredPins = mapData.pins.filter((p) => p.day === selectedDay);
+  const filteredPins = useMemo(() => mapData.pins.filter((p) => p.day === selectedDay), [mapData.pins, selectedDay]);
 
   if (query.isLoading) return <LoadingState />;
   if (query.isError) return <ErrorState message={(query.error as Error).message} />;
