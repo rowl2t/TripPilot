@@ -1,10 +1,5 @@
-export interface AdminGuardContext {
-  isAuthenticated: boolean;
-  role?: string | null;
-  profileIsAdmin?: boolean;
-}
-
-export const canAccessAdmin = ({ isAuthenticated, role, profileIsAdmin }: AdminGuardContext): boolean => {
-  if (!isAuthenticated) return false;
-  return role === 'admin' || profileIsAdmin === true;
-};
+export * from './auth/admin-guard';
+export * from './monitoring/logger';
+export * from './monitoring/posthog';
+export * from './monitoring/sentry';
+export * from './ops/admin-ops';

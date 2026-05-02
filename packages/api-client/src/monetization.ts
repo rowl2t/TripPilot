@@ -3,15 +3,25 @@ import { entitlementSchema, usageSnapshotSchema } from '@trippilot/schemas';
 
 import type { ApiResponse } from './types';
 import { toApiError } from './types';
+import { withRetryBackoff } from './reliability';
 
 const FREE = { ai_generation_limit: 2, saved_links_limit: 20, offline_pack_enabled: false, advanced_booking_enabled: false };
 const PRO = { ai_generation_limit: 9999, saved_links_limit: 5000, offline_pack_enabled: true, advanced_booking_enabled: true };
+const entCache = new Map<string, ReturnType<typeof entitlementSchema.parse>>();
 
 export const resolveEntitlement = async (client: SupabaseClient, userId: string): Promise<ApiResponse<ReturnType<typeof entitlementSchema.parse>>> => {
-  const sub = await client.from('subscriptions').select('provider, entitlement, status').eq('user_id', userId).eq('status', 'active').limit(1).maybeSingle();
-  const isPro = !!sub.data && sub.data.entitlement?.toLowerCase().includes('pro');
-  const plan = isPro ? 'pro_monthly' : 'free';
-  return { ok: true, data: entitlementSchema.parse({ user_id: userId, plan, ...(isPro ? PRO : FREE) }) };
+  try {
+    const sub = await withRetryBackoff(() => client.from('subscriptions').select('provider, entitlement, status').eq('user_id', userId).eq('status', 'active').limit(1).maybeSingle(), { retries: 1, timeoutMs: 2500 });
+    const isPro = !!sub.data && sub.data.entitlement?.toLowerCase().includes('pro');
+    const plan = isPro ? 'pro_monthly' : 'free';
+    const parsed = entitlementSchema.parse({ user_id: userId, plan, ...(isPro ? PRO : FREE) });
+    entCache.set(userId, parsed);
+    return { ok: true, data: parsed };
+  } catch {
+    const cached = entCache.get(userId);
+    if (cached) return { ok: true, data: cached };
+    return toApiError('ENTITLEMENT_UNAVAILABLE', '결제 상태 확인에 실패했어요. 잠시 후 다시 시도해 주세요.');
+  }
 };
 
 export const getUsageSnapshot = async (client: SupabaseClient, userId: string): Promise<ApiResponse<ReturnType<typeof usageSnapshotSchema.parse>>> => {

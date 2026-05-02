@@ -7,14 +7,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'TripPilot',
     description: 'Plan smarter trips with AI + verified place data',
-    images: ['/og-placeholder.png']
+    images: [{ url: '/og-placeholder.png', alt: 'TripPilot service preview' }]
   }
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, fontFamily: 'Inter, system-ui, sans-serif', background: '#f7fafc' }}>{children}</body>
+    <html lang="ko">
+      <body style={{ margin: 0, fontFamily: 'Inter, system-ui, sans-serif', background: '#f7fafc' }}>
+        <a href="#main-content" style={{ position: 'absolute', left: -9999, top: 0 }} onFocus={(e) => (e.currentTarget.style.left = '8px')}>본문으로 건너뛰기</a>
+        {children}
+      </body>
     </html>
   );
 }

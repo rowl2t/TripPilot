@@ -1,8 +1,12 @@
 import { Text, View } from 'react-native';
-import { lightTokens } from '../theme/tokens';
 
-export const Badge = ({ label }: { label: string }) => (
-  <View style={{ alignSelf: 'flex-start', backgroundColor: lightTokens.color.accent, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 }}>
-    <Text style={{ color: '#032127', fontWeight: '700', fontSize: 12 }}>{label}</Text>
-  </View>
-);
+import { tokens } from '../theme/tokens';
+
+export const Badge = ({ label, tone = 'default' }: { label: string; tone?: 'default' | 'success' | 'warning' | 'danger' }) => {
+  const toneColor = tone === 'success' ? tokens.color.success : tone === 'warning' ? tokens.color.warning : tone === 'danger' ? tokens.color.danger : tokens.color.brand;
+  return (
+    <View style={{ alignSelf: 'flex-start', borderRadius: tokens.radius.pill, paddingHorizontal: tokens.spacing.sm, paddingVertical: tokens.spacing.xs, backgroundColor: `${toneColor}22`, borderWidth: 1, borderColor: `${toneColor}66` }}>
+      <Text style={{ color: toneColor, fontSize: tokens.typography.caption.fontSize }}>{label}</Text>
+    </View>
+  );
+};

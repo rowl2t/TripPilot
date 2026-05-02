@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from '@trippilot/api-client';
+import { sanitizeMetadataForAnalysis } from './policy';
 
 const detectPlatform = (url: string): string => {
   if (url.includes('instagram.com')) return 'instagram';
@@ -25,8 +26,8 @@ export const processSavedLink = async (savedLinkId: string): Promise<void> => {
   }
 
   const platform = detectPlatform(row.data.url);
-  const title = row.data.title ?? row.data.url;
-  const description = row.data.description ?? 'metadata unavailable';
+  const title = sanitizeMetadataForAnalysis(row.data.title ?? row.data.url);
+  const description = sanitizeMetadataForAnalysis(row.data.description ?? 'metadata unavailable');
   const candidates = extractCandidates(`${title} ${description}`);
 
   for (const c of candidates) {

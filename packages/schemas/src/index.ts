@@ -10,3 +10,5 @@ export * from './saved-links';
 export * from './collaboration';
 export * from './offline-pack';
 export * from './monetization';
+
+export * from './api-contract';

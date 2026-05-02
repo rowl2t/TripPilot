@@ -9,3 +9,5 @@ export type TripStatus = (typeof TRIP_STATUS)[number];
 export type TripVisibility = (typeof TRIP_VISIBILITY)[number];
 export type BookingTaskStatus = (typeof BOOKING_TASK_STATUS)[number];
 export type SavedLinkAnalysisStatus = (typeof SAVED_LINK_ANALYSIS_STATUS)[number];
+
+export * from './place-normalization';

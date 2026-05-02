@@ -1,11 +1,14 @@
-import { TextInput } from 'react-native';
-import { lightTokens } from '../theme/tokens';
+import { Text, TextInput, View } from 'react-native';
+import { tokens } from '../theme/tokens';
 
-export const Input = (props: React.ComponentProps<typeof TextInput>) => (
-  <TextInput
-    accessibilityLabel={props.accessibilityLabel}
-    placeholderTextColor={lightTokens.color.muted}
-    style={{ borderWidth: 1, borderColor: lightTokens.color.border, borderRadius: lightTokens.radius.md, padding: lightTokens.spacing.md, color: lightTokens.color.text }}
-    {...props}
-  />
+export const Input = ({ label, ...props }: React.ComponentProps<typeof TextInput> & { label?: string }) => (
+  <View style={{ gap: 6 }}>
+    {label ? <Text style={{ color: tokens.color.textSecondary, fontSize: tokens.typography.caption.fontSize }}>{label}</Text> : null}
+    <TextInput
+      accessibilityLabel={props.accessibilityLabel ?? label}
+      placeholderTextColor={tokens.color.textSecondary}
+      style={{ borderWidth: 1, borderColor: tokens.color.border, borderRadius: tokens.radius.md, padding: tokens.spacing.md, color: tokens.color.textPrimary, minHeight: 44 }}
+      {...props}
+    />
+  </View>
 );
