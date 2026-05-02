@@ -1,22 +1,21 @@
-# Calendar Feature
+# calendar 가이드
 
-## 제공 기능
-- 앱 내 Calendar 탭 리스트 뷰
-- itinerary_items + booking_tasks 기반 calendar_events 생성
-- 중복 생성 방지(제목+시작시각 기준)
-- ICS 텍스트 export
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 어댑터
-- Google Calendar adapter (`apps/worker/src/calendar/google-adapter.ts`)
-  - credentials 없으면 mock externalEventId 반환
-- Apple Calendar
-  - 현재 EventKit 직접연동 대신 ICS export 우선
-  - 추후 native module로 확장 가능하도록 interface 분리
+## 목적
+- TripPilot의 calendar 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## Reminder
-- booking due_date 기준 60분/30분 전 payload 생성
-- 추후 push worker + calendar_events 동기화 예정
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## 보안
-- OAuth client id/secret/refresh token은 env로만 주입
-- 앱 클라이언트에 service role / secret 노출 금지
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
+
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

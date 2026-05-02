@@ -1,26 +1,21 @@
-# Collaboration (Companion Planning)
+# collaboration 가이드
 
-## 기능
-- owner가 이메일 초대 생성 (`trip_members.invite_email`, `invite_status=pending`)
-- role 모델: owner/editor/viewer
-- 장소 후보 투표: must/like/neutral/dislike
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 권한 모델
-- owner: 초대/전체 수정/삭제
-- editor: 일정 수정 + 투표
-- viewer: 읽기 + 투표
+## 목적
+- TripPilot의 collaboration 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 투표 집계 규칙
-- must 우선순위 가중치 +2
-- like +1
-- dislike -1
-- dislike 다수(2+) & must 없음이면 avoid 후보
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## AI 재생성 반영
-- vote summary -> `must_include`, `avoid_places` 제약으로 변환
-- regenerate 요청 payload에 포함해 worker로 전달
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## 이메일 어댑터
-- `apps/worker/src/collaboration/resend-adapter.ts`
-- RESEND API key 없으면 mock id 반환
-- key 있으면 실제 발송 adapter로 교체 가능
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

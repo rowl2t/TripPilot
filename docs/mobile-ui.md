@@ -1,37 +1,21 @@
-# TripPilot Mobile UI System
+# mobile ui 가이드
 
-## 디자인 원칙
-- 프리미엄 여행 어시스턴트 톤(딥 블루 + 민트)
-- 카드형 정보 구조, 큰 CTA, 단계 유도
-- 초보 사용자 중심의 명확한 다음 행동
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 화면 구조 (Expo Router)
-- `app/(tabs)/index.tsx`: Home Dashboard
-- `app/(tabs)/trips.tsx`: 내 여행 목록
-- `app/(tabs)/saved.tsx`: 저장 링크
-- `app/(tabs)/calendar.tsx`: 캘린더
-- `app/(tabs)/profile.tsx`: 프로필/구독
-- `app/auth/login.tsx`: 로그인
-- `app/onboarding.tsx`: 온보딩
+## 목적
+- TripPilot의 mobile ui 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 공통 컴포넌트
-- Button, Card, Input, Badge
-- EmptyState, LoadingState, ErrorState, Skeleton
-- 접근성: `accessibilityLabel` 기본 적용
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## 상태 관리
-- 서버 상태: TanStack Query (`src/state/query-client.ts`)
-- UI 로컬 상태: Zustand (`src/state/ui-store.ts`)
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## 다크모드/토큰
-- `src/theme/tokens.ts`에 light/dark 토큰 분리
-- 이후 ThemeProvider로 시스템 테마 자동 동기화 확장 예정
-
-## Preview
-- `src/components/preview.tsx` 에 컴포넌트 프리뷰 조합 제공
-
-## 다음 단계
-1. Expo Router 실제 네비게이션/딥링크 구성
-2. Supabase Auth 세션과 라우트 가드 연결
-3. 홈/여행/저장/예약/캘린더 API 연동
-4. Skeleton 애니메이션 및 디자인 QA
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

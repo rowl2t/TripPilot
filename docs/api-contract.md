@@ -1,36 +1,21 @@
-# API Contract (Internal)
+# api contract 가이드
 
-## 목표
-mobile/web/admin/worker가 동일한 request/response 계약을 공유하고, 변경 시 파손을 줄인다.
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## Versioning
-- Internal API Version: `2026-05-02.v1`
-- 위치
-  - `packages/schemas/src/api-contract.ts` (`API_VERSION`)
-  - `packages/api-client/src/types.ts` (`INTERNAL_API_VERSION`)
-- Breaking change 규칙
-  1. schema 필드 삭제/타입 변경 시 버전 증가
-  2. `docs/api-contract.md`에 변경 내역 기록
-  3. consumer(apps/worker) 영향 체크 후 배포
+## 목적
+- TripPilot의 api contract 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## Canonical Resource Schemas
-- Trip
-- Itinerary
-- Place Option
-- Saved Link
-- Booking Task
-- Calendar Event
-- Subscription
-- Support Ticket
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-(정의: `packages/schemas/src/api-contract.ts`)
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## API Client 계약
-- 공통 응답 타입: `ApiResponse<T>`
-- 공통 pagination 타입: `Paged<T>` / `Pagination`
-- auth-aware wrapper: `AuthAwareClient`
-- error normalization: `toApiError`, `normalizeUnknownError`
-
-## 테스트
-- schema parse test: `packages/schemas/src/api-contract.test.ts`
-- API mock test: support/affiliate/reliability 등 existing tests에서 응답 형태 검증
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

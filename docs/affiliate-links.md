@@ -1,33 +1,21 @@
-# Affiliate Links & Booking Link Quality
+# affiliate links 가이드
 
-## 목표
-- 예약 체크리스트에서 바로 유용한 외부 링크로 이동
-- 제휴 API가 없어도 fallback 검색 링크 안정 생성
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 구현
-- `packages/api-client/src/affiliate-links.ts`
-  - provider별 URL builder 분리
-  - destination/date/travelers/currency 반영
-  - UTM 파라미터 자동 부여
-  - `AFFILIATE_ID` env 반영
-  - provider unavailable 시 `google_search` fallback
+## 목적
+- TripPilot의 affiliate links 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 대상 카테고리
-- 항공권(flight)
-- 숙소(hotel)
-- 도시 간 교통(transport)
-- 액티비티(activity)
-- 식당 예약(restaurant)
-- eSIM(esim)
-- 여행자 보험(insurance)
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## Tracking
-- outbound click event 생성 helper
-- 기록 필드: provider, task_type, trip_id, task_id
-- 개인정보 최소화(PII 미포함)
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## UI
-- 예약 링크 버튼
-- provider 표시
-- 가격 변동/최종 확인 안내
-- 링크 오류 신고 버튼
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

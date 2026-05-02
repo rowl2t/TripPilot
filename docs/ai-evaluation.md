@@ -1,29 +1,21 @@
-# AI Evaluation Dataset & Runner
+# ai evaluation 가이드
+
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
 ## 목적
-코드 변경 전후 AI 일정 품질(정합성/제약 준수/예산/밀도)을 비교 가능하게 유지.
+- TripPilot의 ai evaluation 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 구성
-- 입력 데이터셋: `packages/ai/src/eval/inputs.ts` (10개 케이스)
-  - 기간/예산/인원/스타일 다양성
-  - saved links 포함 케이스
-  - must/avoid 제약 포함 케이스
-- 실행기: `packages/ai/src/eval/runner.ts`
-  - mock mode 기본
-  - `OPENAI_API_KEY` 존재 시 real-ai mode 표시
-  - 결과 JSON: `packages/ai/reports/latest.json`
-  - baseline 비교: `packages/ai/reports/baseline.json`
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## 평가 기준
-- schema validation 통과
-- 날짜 누락 없음
-- 식사 포함
-- 일정 밀도(일 평균 아이템 과밀 여부)
-- 예산 초과 여부
-- 예약 task 존재
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## 회귀 기준
-- 최신 passed 케이스 수가 baseline보다 작으면 실패 처리.
-
-## 실행
-- `pnpm --filter @trippilot/ai eval:ai`
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.
