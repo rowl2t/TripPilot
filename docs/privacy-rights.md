@@ -1,35 +1,21 @@
-# Privacy Rights (Export / Deletion)
+# privacy rights 가이드
 
-## 사용자 기능
-- Profile > Privacy에서 데이터 내보내기(JSON) 요청
-- Profile > Privacy에서 계정 삭제 요청(위험 작업 2단계 확인)
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## Data Export 범위
-- profile
-- trips
-- itinerary
-- saved links
-- booking tasks
-- votes
-- calendar events
+## 목적
+- TripPilot의 privacy rights 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-`packages/api-client/src/privacy.ts`의 `buildUserDataExport`가 본인 userId 범위로만 조회하며, 민감키(access token/secret 계열)는 제거합니다.
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## Export 보안
-- export 요청 audit log 기록
-- export URL TTL은 기본 600초(짧은 만료)
-- zip 준비를 위한 파일 리스트 구조(`zipReady.files`) 포함
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## Account Deletion
-- 요청 시 audit log에 `account_deletion_requested` 기록
-- profile에 `deletion_requested_at` 표시(soft delete/scheduled deletion 준비)
-- 실제 Supabase auth user 삭제는 `adminDeleteSupabaseAuthUser`로 service-role client에서만 수행
-- 기본 scheduled deletion window: 7일
-
-## Admin
-- `apps/admin/src/ops/admin-ops.ts`의 `listDeletionRequests`로 요청 조회 가능
-
-## 규정/심사 대응 포인트
-- 본인 데이터만 export
-- 민감 정보 export 금지
-- 파괴적 작업 확인 UX 제공
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

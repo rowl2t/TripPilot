@@ -1,23 +1,20 @@
-# TripPilot Privacy Engineering (Step 17)
+# 개인정보 보호 엔지니어링
 
-## Data minimization
-- Collect only trip-planning-essential data (destination, dates, traveler/budget preferences).
-- Saved link analysis stores minimal metadata and derived candidates.
+## 목표
+서비스 기능을 제공하면서 개인정보 수집/보관/처리를 최소화합니다.
 
-## Logging guidance
-- Avoid storing direct PII in logs.
-- Keep audit trail semantic (`action`, `target_type`, `target_id`) over raw payload dumps.
+## 원칙
+- 데이터 최소 수집
+- 목적 제한
+- 보관 기간 최소화
+- 사용자 권리(내보내기/삭제) 보장
 
-## User rights skeleton
-- `requestAccountDeletion` records deletion requests for controlled processing.
-- `requestDataExport` records export requests for controlled processing.
+## 구현 가이드
+- export/delete 요청 흐름 제공
+- 민감정보 export 제외
+- 감사 로그에는 최소 메타데이터만 기록
+- 접근 제어(RLS/권한 분리) 적용
 
-## Third-party policies
-- Link analysis relies on public/user-provided metadata.
-- No credentialed scraping or policy-bypassing mechanisms.
-
-## Security controls map
-- Zod input validation
-- RLS at DB layer
-- role-gated admin access
-- server-only secrets
+## 점검
+- 신규 기능 추가 시 개인정보 영향도 확인
+- 문서(`docs/privacy-rights.md`)와 동기화

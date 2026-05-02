@@ -30,7 +30,11 @@ export class InMemoryQueueProvider implements QueueProvider {
       } catch {
         next.attemptsMade += 1;
         if (next.attemptsMade >= next.attemptsMax) this.deadLetterQueue.push(next);
-        else this.queue.push(next);
+        else {
+          const backoffMs = Math.min(5000, 300 * (2 ** (next.attemptsMade - 1)));
+          await new Promise((resolve) => setTimeout(resolve, backoffMs));
+          this.queue.push(next);
+        }
       }
     }
   }

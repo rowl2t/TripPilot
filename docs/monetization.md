@@ -1,28 +1,21 @@
-# Monetization
+# monetization 가이드
 
-## 플랜
-- Free: 월 AI 2회, saved links 20개, offline pack 제한
-- Pro Monthly: 고급 기능 + 사실상 제한 해제
-- Trip Pack: 특정 trip 고급 생성 1회 구매
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## Entitlement Service
-- `subscriptions` 기반 active entitlement 계산
-- RevenueCat webhook payload 반영 가능한 구조
+## 목적
+- TripPilot의 monetization 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## Usage Meter
-- `ai_runs` 월간 카운트
-- `saved_links` 총량
-- `trips` 총량
-- 서버에서 `enforceUsageLimit`로 강제
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## Paywall
-- 모바일 Profile 탭에 현재 플랜/사용량 표시
-- 초과 시 제한 메시지 + 업그레이드 CTA
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## Adapters
-- RevenueCat: offerings/purchase/restore mock 가능
-- Stripe: checkout adapter + webhook skeleton
-
-## 보안
-- RevenueCat/Stripe secret은 서버 env에만 저장
-- 모바일 앱에는 공개 가능한 키만 사용
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

@@ -1,37 +1,21 @@
-# Place Normalization & Deduplication
+# place normalization 가이드
 
-## 목표
-- AI/Google Places/SNS 링크 분석에서 들어온 장소 후보 중복 저장 방지
-- 같은 장소의 다양한 표기(현지어/영문/한국어) 통합
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 구현 위치
-- `packages/db/src/place-normalization.ts`
+## 목적
+- TripPilot의 place normalization 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## Normalization
-- 이름 `trim + lowercase`
-- 괄호 표현 제거
-- 특수문자 제거
-- alias 집합 관리(원본명 + 별칭)
-- 주소 normalize
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## Deduplication
-1. `google_place_id` 일치 시 즉시 동일 장소
-2. 없으면 `name(alias) + city + lat/lng proximity` 점수 계산
-3. confidence >= 0.7: merge
-4. confidence >= 0.5: possible duplicate로 기록
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## Merge 정책
-- source payload 병합
-- categories union
-- rating/price_level 최신값 우선
-- 좌표/주소 최신값 보강
-
-## Saved Link Integration
-- `reconcileSavedLinkPlaces`로 saved_link_places를 기존 places와 매칭
-- 매칭 성공 시 place_id / linked_place_name 보정
-
-## 테스트
-- 같은 장소 다른 표기
-- 같은 이름 다른 도시
-- place_id 없는 후보
-- 좌표 근접 후보 + possible duplicate 기록
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

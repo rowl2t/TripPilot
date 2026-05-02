@@ -1,34 +1,21 @@
-# TripPilot Auth & Authorization
+# auth 가이드
 
-## 목표
-- Supabase Auth를 모바일/웹 공통 인증원으로 사용
-- RLS 전제 하에 클라이언트 접근(anon key)과 서버 접근(service role)을 분리
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 구성
-- `packages/api-client`
-  - browser/mobile client factory
-  - server(service role) client factory
-  - auth helper(sign in/up, sign out, refresh)
-  - typed API response/error wrapper
-- `apps/mobile`
-  - Expo SecureStore 기반 세션 저장
-  - 보호 라우트 계산(`resolveMobileRoute`)
-- `apps/web`
-  - 퍼블릭 랜딩 + 인증 필요 account 라우트 분리
-  - auth callback 해시 파서
-- `apps/admin`
-  - admin guard 골격(클레임 role 또는 profile flag 확장 가능)
+## 목적
+- TripPilot의 auth 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 보안 원칙
-1. `SUPABASE_SERVICE_ROLE_KEY`는 서버/워커에서만 사용
-2. 모바일/웹은 `ANON KEY`만 사용
-3. RLS 우회 작업은 API/worker에서 service role로 수행
-4. auth payload는 Zod 스키마로 검증
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## 라우팅 플로우
-- 로그인 전: mobile `/auth/sign-in`, web landing(`/`)
-- 로그인 후 온보딩 미완료: mobile `/onboarding`
-- 로그인 후 온보딩 완료: mobile `/trips`, web `/account/*`
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## 테스트
-- `packages/api-client/src/auth.test.ts`에서 validation/refresh helper 단위 테스트 포함
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

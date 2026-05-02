@@ -1,37 +1,21 @@
-# Reliability & Graceful Degradation
+# reliability 가이드
 
-## 목표
-외부 서비스(OpenAI, Places, RevenueCat, Supabase, Redis/Worker) 장애 시 앱 전체가 깨지지 않고 핵심 흐름을 유지.
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## 공통 전략
-- provider별 timeout (`withTimeout`)
-- retry with backoff (`withRetryBackoff`)
-- simple circuit breaker (`createCircuitBreaker`)
-- 상태 배너(`StatusBanner`)로 사용자 안내
+## 목적
+- TripPilot의 reliability 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 시나리오 대응
-1. **OpenAI 장애**
-   - 기존 일정 조회 유지
-   - 새 생성은 대기/재시도 안내
-   - 사용자 입력은 draft에 보존
-2. **Places 장애**
-   - AI 후보 표시 + 검증 필요 안내
-   - 추후 재검증 가능
-3. **RevenueCat 장애**
-   - 최근 entitlement cache 사용
-   - 실패 안내 메시지 제공
-4. **Redis/Worker 장애**
-   - pending 유지 + 재시도 버튼 안내
-   - admin failed job 확인
-5. **Supabase 일시 오류**
-   - 사용자 친화 오류 메시지
-   - 재시도 UX 노출
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## 구현 위치
-- `packages/api-client/src/reliability.ts`
-- `packages/api-client/src/monetization.ts` (entitlement cache fallback)
-- `apps/mobile/src/components/StatusBanner.tsx`
-- `apps/admin/src/ops/admin-ops.ts` (`getProviderHealth`)
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## 테스트
-- provider failure mock 기반 reliability helper 테스트
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

@@ -1,43 +1,14 @@
-# Final Audit (Pre-Release)
+# 최종 감사 체크리스트
 
-## Feature completeness
-- Mobile/Web/Admin/Worker scaffolds exist.
-- Core flows implemented as production-directed skeletons with typed contracts.
+## 코드 품질
+- lint/typecheck/test/build 통과
+- mock 코드의 production 유입 여부 점검
 
-## External dependency check
-- Supabase, OpenAI, Stripe, RevenueCat, Places APIs are env-driven.
-- No hardcoded secret keys detected.
+## 보안/개인정보
+- 민감정보 노출 여부 점검
+- 데이터 export/delete 동작 확인
 
-## Security check
-- RLS policies present in migrations.
-- Admin role guard implemented.
-- SNS link policy + metadata sanitization implemented.
-
-## DB/RLS check
-- Core user tables configured with RLS in migration SQL.
-- Admin/service-only flows separated by server-side usage.
-
-## Payment check
-- RevenueCat + Stripe adapters present.
-- Production product mapping/reconciliation is external operational task.
-
-## AI cost check
-- Model env variables configurable.
-- Cost control/usage limits partial; alerting remains an ops task.
-
-## Incident readiness
-- Worker has healthcheck endpoint and SIGTERM shutdown.
-- Structured logs are available; centralized log sink is deployment task.
-
-## Post-release monitoring
-- Sentry/PostHog wrappers present (env-gated noop behavior).
-- Dashboards/alerts to be configured in production tooling.
-
-## TODO/FIXME scan summary
-- No blocking TODO/FIXME markers found in app/package/docs scan.
-- Remaining `as any` is mainly in tests/mocks for stubbing convenience.
-
-## Remaining external tasks (non-code)
-- Store account setup (Apple/Google), listing assets, review responses.
-- Final API quotas/billing guardrails.
-- Production secrets provisioning and CI environment wiring.
+## 운영 준비
+- 장애 대응 문서 최신화
+- 관리자 대시보드 지표 확인
+- 릴리즈 노트/롤백 계획 준비

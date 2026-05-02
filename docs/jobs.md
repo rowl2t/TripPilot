@@ -1,32 +1,19 @@
-# Worker Jobs (Step 16)
+# Jobs 운영 가이드
 
-## Queue
-- `QueueProvider` abstraction added.
-- Default: `InMemoryQueueProvider` for dev/test.
-- Supports idempotency key, retry attempts, and dead-letter queue.
+## 개요
+워커는 큐 기반으로 비동기 작업을 처리합니다.
 
-## Job types
-1. `generate_trip_plan`
-2. `regenerate_trip_plan`
-3. `analyze_saved_link`
-4. `create_booking_tasks`
-5. `sync_calendar_events`
-6. `send_invite_email`
-7. `refresh_affiliate_links`
+## 주요 작업
+- 여행 일정 생성
+- 저장 링크 분석
+- 알림/후속 처리
 
-## Reliability
-- Payload validated with Zod before job logic.
-- Retry on failure until `attemptsMax`.
-- Failures move to DLQ.
-- Job result/error writes into DB adapter (`ai_runs`, `saved_links`, `trips`, `audit_logs` hooks).
+## 운영 체크
+- pending/failed 수 모니터링
+- 실패 작업 재시도
+- DLQ 누적 여부 확인
 
-## Running
-- `startWorker()` boots worker loop.
-- Producer: `producer.enqueueJob(name, payload, idempotencyKey)`.
-- Graceful shutdown on `SIGTERM`.
-
-## Next production step
-- Add BullMQ/Redis provider implementing same `QueueProvider` interface using:
-  - `REDIS_HOST`
-  - `REDIS_PORT`
-  - optional `REDIS_PASSWORD`
+## 로컬 테스트
+```bash
+pnpm --filter @trippilot/worker test
+```

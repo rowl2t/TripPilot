@@ -1,25 +1,13 @@
-# Design Polish (Pre-Release)
+# 디자인 마감 점검
 
-## Scope
-- Mobile core surfaces: onboarding/home/trip create/trip detail/booking/saved links/calendar/profile.
-- Shared components and design tokens.
+## 공통
+- 간격/타이포/컬러 일관성
+- 버튼 상태(기본/비활성/로딩)
+- 에러/빈 상태 메시지 품질
 
-## Token upgrades
-- Added premium-dark palette, semantic status colors.
-- Unified spacing/radius/typography/shadow/icon tokens.
-
-## Component upgrades
-- Button variants: primary/secondary/ghost/danger.
-- Added pressed/disabled/loading behavior for buttons.
-- Card hierarchy with border + elevation.
-- Badge semantic tones (success/warning/danger/default).
-- EmptyState now has illustration placeholder + improved typography.
-
-## Consistency improvements
-- Shared token use across core components.
-- CTA button visual behavior standardized by component-level variants.
-
-## Next visual pass
-- Apply new token primitives to every screen container/text style.
-- Add micro-animations for list transitions and progress bars.
-- Replace placeholder empty illustration with branded asset.
+## 핵심 화면
+- 온보딩
+- 첫 여행 생성
+- Trip Detail
+- 예약 체크리스트
+- 프로필/지원

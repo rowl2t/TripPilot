@@ -1,19 +1,21 @@
-# Maps & Routing UX
+# maps routing 가이드
 
-## 구현 요약
-- Trip detail에 Map 섹션 추가.
-- 날짜별 Day 필터 제공.
-- itinerary 순서 번호(order) 표시.
-- marker type 표시(hotel/airport/restaurant/attraction).
-- Route summary에 이동 수단 + 예상 소요시간 표시.
-- 90분 이상 구간 warning 표시(`isLongRouteLeg`).
-- 장소 상세 bottom-sheet 대체 UI(카드) 제공: 이름/주소/카테고리/평점/체류시간/선택 이유/대체안.
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## Provider layer
-- `apps/mobile/src/maps/provider.ts`:
-  - provider key 존재 여부 감지
-  - key 미설정 시 mock map data 제공
-  - route warning 로직 제공
+## 목적
+- TripPilot의 maps routing 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## 테스트
-- `apps/mobile/src/maps/provider.test.ts`에서 장거리 경고 로직 검증.
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
+
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
+
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

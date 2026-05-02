@@ -7,6 +7,8 @@ import { mobileAuthClient } from '../index';
 export const useTripDetail = (tripId: string) =>
   useQuery({
     queryKey: ['trip-detail', tripId],
+    staleTime: 1000 * 60,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const result = await getTripDetail(mobileAuthClient, tripId);
       if (!result.ok) throw new Error(result.error.message);

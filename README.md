@@ -1,35 +1,32 @@
-# TripPilot Monorepo
+# TripPilot 모노레포
 
-TripPilot 상용 서비스 개발을 위한 pnpm + Turborepo 기반 모노레포입니다.
+TripPilot은 모바일/웹/어드민/워커 앱과 공통 패키지를 하나의 모노레포에서 관리합니다.
 
-## Workspace 구조
-- `apps/mobile`: Expo React Native 앱
-- `apps/web`: Next.js 웹 랜딩/정책 페이지
-- `apps/admin`: 운영자 콘솔 레이어
-- `apps/worker`: 비동기 작업 워커 + healthcheck
-- `packages/api-client`: Supabase typed API helpers
-- `packages/ai`: itinerary planning pipeline
-- `packages/schemas`: Zod 도메인 스키마
-- `supabase/*`: DB migration/seed/RLS
-- `docs/*`: 운영/보안/배포/출시 문서
+## 워크스페이스
+- `apps/mobile`: Expo 기반 모바일 앱
+- `apps/web`: Next.js 웹 앱
+- `apps/admin`: 운영/모니터링 도구
+- `apps/worker`: 비동기 작업 처리 런타임
+- `packages/*`: 공통 스키마, API 클라이언트, AI/DB 유틸
 
-## 공통 명령
-- `pnpm lint`
-- `pnpm typecheck`
-- `pnpm test`
-- `pnpm build`
+## 로컬 실행
+> 현재 환경에 따라 `pnpm` bootstrap이 필요합니다.
 
-## 출시 준비 문서
-- `docs/release-checklist.md`
-- `docs/store-listing.md`
-- `docs/app-review-notes.md`
-- `docs/final-audit.md`
-- `docs/deploy.md`
-- `docs/supabase-ops.md`
+```bash
+pnpm install
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
 
-## 핵심 환경변수
-- Supabase: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-- Mobile public: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`
-- Web public: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- AI/3rd-party: `OPENAI_API_KEY`, `GOOGLE_PLACES_API_KEY`, `STRIPE_SECRET_KEY`, `REVENUECAT_API_KEY`
-- EAS: `EXPO_EAS_PROJECT_ID`, `EXPO_IOS_BUNDLE_ID`, `EXPO_ANDROID_PACKAGE`
+## 로컬 테스트 방법
+1. 의존성 설치: `pnpm install`
+2. 정적 검증: `pnpm lint && pnpm typecheck`
+3. 단위 테스트: `pnpm test`
+4. 빌드 검증: `pnpm build`
+
+### 네트워크 제한으로 pnpm이 실패할 때
+- 사내 프록시/registry 허용 설정 확인
+- CI runner에서 `pnpm@10` 다운로드 가능 여부 확인
+- 임시로는 코드 정적 점검 + 문서 리허설로 위험을 줄이고, 최종 배포 전 반드시 CI 통과

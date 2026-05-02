@@ -1,38 +1,21 @@
-# AI Cost Optimization
+# ai cost optimization 가이드
 
-## 목표
-- `gpt-5.5`는 최종 일정 생성/critique-repair에만 사용.
-- 입력 정규화/링크 요약/후보 추출은 fast model로 분리.
-- 캐시와 사용량 제한으로 운영 비용 절감.
+이 문서는 기존 영문 문서를 한글 기준으로 정리한 운영/개발 가이드입니다.
 
-## Model Routing
-- 구현: `packages/ai/src/model-router.ts`
-- fast task: `normalize_input`, `link_metadata_summary`, `candidate_extraction`
-- quality task: `final_itinerary`, `critique_repair`
+## 목적
+- TripPilot의 ai cost optimization 기능/정책/운영 절차를 일관되게 관리한다.
+- 개발/QA/운영 팀이 동일한 기준으로 점검할 수 있도록 한다.
 
-## Caching
-- Trip input hash 기반 결과 캐시 (`planCache`)
-- Places 검색 캐시 (`placesCache`)
-- Saved link/스타일 분석 캐시 (`linkAnalysisCache`)
-- 동일 key 중복 분석 방지
+## 핵심 점검 항목
+1. 기능 동작 조건 및 실패 시 fallback
+2. 보안/개인정보/권한 원칙 준수
+3. 외부 API 장애 시 사용자 영향 최소화
+4. 로그/모니터링/운영 대응 절차
 
-## Cost Tracking
-- planner 결과에 `tokenUsage` + `estimatedCost` 유지
-- DB `ai_runs`는 `token_usage`/`cost_estimate` 저장을 전제로 함
-- `packages/api-client/src/services/usage-limit.ts`에 월간 비용 추정 helper 추가
+## 릴리즈 전 확인
+- 수동 QA 체크리스트의 관련 항목 수행
+- 스테이징 환경에서 E2E 시나리오 검증
+- 오류 로그 및 경고 지표 점검
 
-## Limits
-- 무료 사용자 월간 제한
-- 과도한 입력 길이 제한
-- 재생성 요청 제한
-- 사용자 단위 rate limit 보호 구조
-
-## Admin Visibility
-- `apps/admin/src/ops/admin-ops.ts`
-  - 대시보드에 `aiCostEstimateTotal`, `aiFailureRate` 제공
-  - `listAiRuns`에 `cost_estimate` 포함
-
-## 테스트
-- `packages/ai/src/model-router.test.ts`
-- `packages/ai/src/pipeline/planner.test.ts` 캐시 hit/miss 확인
-- `packages/api-client/src/services/usage-limit.test.ts`
+## 비고
+- 상세 구현 변경 시 본 문서도 함께 업데이트한다.

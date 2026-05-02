@@ -1,27 +1,12 @@
-# App Review Notes (Draft)
+# 앱 심사 노트
 
-## Test account
-- Email: reviewer+ios@trippilot.example
-- Password: TripPilotReview!2026
-- Role: standard user
+## 필수 확인
+- 계정 삭제 경로
+- 데이터 내보내기 경로
+- 결제/구독 안내 문구
+- 고객지원 문의 경로
 
-## Subscription test
-- Sandbox subscription products are configured via RevenueCat.
-- Use in-app paywall test flow; no external card charge in sandbox.
-
-## AI feature explanation
-- AI creates itinerary drafts and booking checklists from user inputs.
-- Outputs are schema-validated before rendering.
-
-## External booking links
-- TripPilot does not directly process travel bookings in-app.
-- Users are redirected to external partner pages.
-- Price/availability can change after redirect.
-
-## SNS link analysis policy
-- We analyze only publicly accessible metadata or user-provided content.
-- No login bypass, DRM bypass, or unauthorized scraping.
-
-## Privacy handling
-- Data is scoped to user account and trip collaboration access.
-- Deletion/export requests are supported through in-app support flow.
+## 기술 확인
+- 크래시/빈 화면 방지
+- 외부 링크 안내 문구
+- 권한 요청 타이밍 적절성

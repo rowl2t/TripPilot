@@ -16,7 +16,9 @@ export default function SavedScreen() {
   const [page, setPage] = useState(1);
   const links = useSavedLinks();
   const create = useCreateSavedLink();
-  const places = useSavedLinkPlaces(selectedId, Boolean(selectedId));
+  const selectedLink = useMemo(() => (links.data ?? []).find((l) => String(l.id) == selectedId), [links.data, selectedId]);
+  const shouldPollPlaces = Boolean(selectedId) && ['pending', 'processing'].includes(String(selectedLink?.analysis_status ?? ''));
+  const places = useSavedLinkPlaces(selectedId, shouldPollPlaces);
   const decide = useDecideSavedLinkPlace(selectedId);
 
   const pageItems = useMemo(() => (links.data ?? []).slice(0, page * PAGE), [links.data, page]);
