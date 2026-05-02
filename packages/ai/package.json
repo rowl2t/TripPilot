@@ -1,0 +1,17 @@
+{
+  "name": "@trippilot/ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'dev scaffold for packages/ai'",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "build": "tsc -p tsconfig.json",
+    "eval:ai": "node --loader ts-node/esm src/eval/runner.ts"
+  },
+  "dependencies": {
+    "@trippilot/schemas": "workspace:*"
+  }
+}
