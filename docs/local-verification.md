@@ -1,4 +1,4 @@
-# Local Verification
+# 로컬 검증 가이드
 
 ## 필수 명령
 - `corepack enable`
@@ -12,15 +12,15 @@
 - `pnpm --filter admin build`
 - `pnpm --filter worker build`
 
-## DB/Migration
+## DB / 마이그레이션
 - `supabase db reset`
 - `supabase migration up`
 
 ## EAS
 - `eas build --profile preview`
 
-## 필요한 env(요약)
-- Supabase: URL/ANON/SERVICE_ROLE
+## 필요한 환경변수(요약)
+- Supabase: URL / ANON / SERVICE_ROLE
 - OpenAI: API key / model
 - Google Places/Routes key
 - RevenueCat key
