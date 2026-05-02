@@ -21,7 +21,7 @@ export interface RouteLeg {
   durationMinutes: number;
 }
 
-export const hasMapProvider = (): boolean => Boolean(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_PLACES_API_KEY);
+export const hasMapProvider = (): boolean => Boolean(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY);
 
 export const getMockMapData = (): { pins: MapPin[]; legs: RouteLeg[] } => ({
   pins: [
